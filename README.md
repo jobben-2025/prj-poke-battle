@@ -1,86 +1,69 @@
-# WBS Node.js TypeScript Backend Scaffold
+# Pokémon Roster & Battle Application Project
 
-A modern, production-ready scaffold for Node.js backend projects using TypeScript with ES modules support.
+This project is a full-stack application for managing a Pokémon roster and battling. Students have a choice of frameworks to implement this project.
 
-## 🚀 Quick Start
+## Project Overview
 
-### Setup
+*   **Duration:** 5 days (Full Time) / 10 Days (Part Time)
+*   **Presentation:** To be Determined (TBD) by Instructor | Mandatory
 
-```bash
-# Clone the template repository
-git clone https://github.com/WebDev-WBSCodingSchool/wbs-node-ts-template.git your-project-name
+## Project Requirements
 
-# Navigate to your project
-cd your-project-name
+The project is structured around a set of functional requirements.  Please review these carefully.
 
-# Remove the existing git history and reinitialize
-rm -rf .git
-git init
+### General Project Guidelines
 
-# Install dependencies
-npm install
+*   **Group Project:** Develop the application collaboratively, ensuring tasks are shared evenly among team members.
+*   **Group Work Guidelines:** Adhere to the bootcamp's best practices for teamwork and collaboration.
+*   **Single Public Repository:**  All client and server code *must* reside in a single public GitHub repository.  Instructors will *not* be added as collaborators.
+*   **Pull Request Workflow:** All code changes must be merged into the `main` branch via reviewed Pull Requests. This promotes code quality and collaboration.
 
-# Start development
-npm run dev
-```
+### Framework Choice
 
-## 📁 Project Structure
+Choose **one** of the following frameworks for implementation:
 
-```bash
-.
-├── package-lock.json   # Dependency lock file (auto-generated)
-├── package.json        # Project configuration and dependencies
-├── README.md          # This file
-├── src
-│   └── app.ts          # Application entry point
-└── tsconfig.json       # TypeScript configuration
-```
+*   **Next.js (with React Server Components - RSC):** Leveraging Next.js's features and utilizing React Server Components for efficient data fetching and rendering.
+*   **React Router (in Framework Mode):** Implementing data loading and actions using React Router's framework mode.
 
-> **Note**: The `dist/` directory will be created automatically when you run `npm run build` to contain the compiled JavaScript output.
+### Technology Stack
 
-## 🛠 Available Scripts
+*   **TypeScript:**  Used consistently throughout both the browser and server codebases.
+*   **Environment Variables:** Secrets (database connection strings, PokeAPI URLs, etc.) should be managed using `.env` files and framework-specific environment variable helpers.
+*   **PostgreSQL (Neon):** A cloud-hosted PostgreSQL database will be provisioned.
+*   **Tailwind CSS:**  Used for styling with a focus on responsive design.
+*   **Zod:** Used for form validation.
 
-| Command            | Description                                                |
-| ------------------ | ---------------------------------------------------------- |
-| `npm run dev`      | Start development server with file watching and hot reload |
-| `npm run build`    | Compile TypeScript to JavaScript                           |
-| `npm run start`    | Build and run the production version                       |
-| `npm run prebuild` | Clean the dist directory (runs automatically before build) |
-| `npm run prestart` | Build the project (runs automatically before start)        |
+## Functional Requirements
 
-## 🔧 Features
+Here's a breakdown of the specific functionalities required for the project, categorized for clarity.
 
-### Modern TypeScript Configuration
+### Database & Data Layer
 
-- **ES2022** target with modern JavaScript features
-- **Strict mode** enabled for better type safety
-- **ES Modules** support (native Node.js ESM)
-- **Path aliases** with `#` prefix to avoid conflicts
-- **Import extensions** support for better IDE experience
+*   **FR008: Cloud DB Provisioning:** Provision a PostgreSQL database using Neon.
+*   **FR009: Leaderboard Model:** Create a database schema for the leaderboard with the following fields:
+    *   `id` / `_id` (Unique identifier)
+    *   `username` (String, NOT NULL)
+    *   `score` (Number, NOT NULL)
+    *   `date` (Date, default: current timestamp)
 
-### Development Experience
+### Data Fetching and Mutations
 
-- **File watching** with `--watch` flag for instant reloads
-- **TypeScript** compilation with proper module resolution
-- **Clean builds** with automatic dist cleanup
-- **Isolated modules** for better compilation performance
+*   **FR011: Retrieve Leaderboard:** Implement an endpoint to fetch all leaderboard scores, ordered by score in descending order (highest score first).
+*   **FR012: Add to Leaderboard:** Implement an endpoint that accepts `username` and `score`, validates the input, writes the new record to the database, and returns the created record.
+    *   *Implementation Note:*  Use React Server Components (RSC) and Server Actions if using Next.js. Use Loaders and Actions if using React Router framework mode.
 
-### Path Aliases
+### Front-End Features
 
-The project supports internal path aliases using the `#` prefix:
-
-```typescript
-// Instead of relative imports like this:
-import { helper } from '../../../utils';
-
-// You can use clean aliases like this:
-import { helper } from '#utils';
-```
-
-You need to add additional modules subpaths to the `imports` field in `package.json`
-
-## 📦 Dependencies
-
-### Runtime Dependencies
-
-- None (pure Node.js setup ready for your additions)
+*   **FR014: Route Map:**  Implement navigation for the following pages using the chosen framework's routing primitives:
+    *   Home
+    *   Pokémon Details
+    *   My Roster
+    *   Battle
+    *   Leaderboard
+*   **FR015: Home Page – Pokémon List:** Fetch Pokémon data from the PokeAPI and display them as cards. Each card should link to the Pokémon details page (/pokemon/:id).
+*   **FR016: Pokémon Details Page:** Display detailed Pokémon information, including stats, types, and abilities.  Include a button to "Add to Roster."
+*   **FR017: My Roster Page:** Display the user's chosen Pokémon. Allow for removal of Pokémon from the roster.  Persist the roster data, either in `localStorage` or in the database.
+*   **FR018: Battle Page:**  Allow users to battle a random Pokémon, using simple type/stat logic.  Track wins, losses, and experience points.
+*   **FR019: Leaderboard Page:** Fetch and display the leaderboard scores.  After a battle, prompt the user for their name and allow them to submit a new score to the leaderboard.
+*   **FR020: Form Validation:** Validate all user inputs (e.g., username, roster changes) using Zod *before* submitting them.
+*   **FR021: Responsive Styling:**  Ensure the application is styled using Tailwind CSS and is responsive and usable across both mobile and desktop devices.
