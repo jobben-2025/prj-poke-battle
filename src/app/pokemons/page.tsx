@@ -13,7 +13,7 @@ export default async function PokemonsPage() {
 
   return (
     <div>
-      <h1>Pokemon Page</h1>
+      <h1>Pokemon</h1>
     </div>
   );
 }
