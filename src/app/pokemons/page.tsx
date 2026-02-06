@@ -1,19 +1,35 @@
-const url = "https://pokeapi.co/api/v2/pokemon";
+"use client";
 
-type Pokemon = {
-  name: string;
-  url: string;
-};
+import { useEffect, useState } from "react";
+import PokemonList from "../components/PokemonList";
+import { Pokemon } from "@/types";
 
-export default async function PokemonsPage() {
-  const response = await fetch(url);
-  const data: Pokemon[] = await response.json();
+const url = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=100";
+const url2 = "https://pokeapi.co/api/v2/pokemon/";
 
-  console.log(data);
+export default function PokemonsPage() {
+  const [pokemons, setPokemons] = useState([]);
 
-  return (
-    <div>
-      <h1>Pokemon</h1>
-    </div>
-  );
+  useEffect(() => {
+    const fetchPokemonData = async () => {
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        const pokemonList = data.results.map((pokemon: Pokemon) => {
+          const id = pokemon.url.split("/")[pokemon.url.split("/").length - 2];
+          return {
+            id: id,
+            name: pokemon.name,
+            image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
+          };
+        });
+        setPokemons(pokemonList);
+      } catch (error) {
+        console.error("Error by calling data fro Pokemon");
+      }
+    };
+    fetchPokemonData();
+  }, []);
+
+  return <div> {<PokemonList pokemons={pokemons} />} </div>;
 }
